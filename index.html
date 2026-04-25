@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>ReportIT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toastContainer"></div>
+
+<!-- SIDEBAR (only shown when logged in) -->
+<aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <img src="logo.png" alt="ReportIT Logo" />
+        </div>
+        <button id="toggleSidebar" class="toggle-sidebar-btn"><i class="bi bi-list"></i></button>
+    </div>
+    
+    <nav class="sidebar-nav">
+        <a href="#" id="sidebarSubmitReport" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-clipboard-plus"></i></span>
+            <span class="sidebar-text">Submit Report</span>
+        </a>
+        <a href="#" id="sidebarTrackReport" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-search"></i></span>
+            <span class="sidebar-text">Track Report</span>
+        </a>
+        <a href="#" id="sidebarDashboard" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-bar-chart-line"></i></span>
+            <span class="sidebar-text">Dashboard</span>
+        </a>
+        <a href="#" id="sidebarThreads" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-newspaper"></i></span>
+            <span class="sidebar-text">Local News</span>
+        </a>
+        <a href="#" id="sidebarEmergency" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-exclamation-octagon"></i></span>
+            <span class="sidebar-text">Emergency</span>
+        </a>
+        <a href="#" id="sidebarSettings" class="sidebar-link">
+            <span class="sidebar-icon"><i class="bi bi-gear"></i></span>
+            <span class="sidebar-text">Settings</span>
+        </a>
+
+        <!-- ADMIN PANEL SECTION -->
+        <div class="sidebar-section-label" id="adminPanelLabel">Admin Panel</div>
+        <a href="#" id="sidebarManageReports" class="sidebar-link admin-link">
+            <span class="sidebar-icon"><i class="bi bi-folder2-open"></i></span>
+            <span class="sidebar-text">Manage Reports</span>
+        </a>
+        <a href="#" id="sidebarManageUsers" class="sidebar-link admin-link active">
+            <span class="sidebar-icon"><i class="bi bi-people"></i></span>
+            <span class="sidebar-text">Manage Users</span>
+        </a>
+        <a href="#" id="sidebarManageNews" class="sidebar-link admin-link">
+            <span class="sidebar-icon"><i class="bi bi-file-earmark-text"></i></span>
+            <span class="sidebar-text">Manage News</span>
+        </a>
+        <a href="#" id="sidebarAnalytics" class="sidebar-link admin-link">
+            <span class="sidebar-icon"><i class="bi bi-graph-up-arrow"></i></span>
+            <span class="sidebar-text">Analytics</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+            <div class="sidebar-user-info">
+                <p id="sidebarUserName">Admin</p>
+                <small>Logged In</small>
+            </div>
+        </div>
+        <button id="sidebarLogout" class="sidebar-logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+    </div>
+</aside>
+
+<div id="mainContent">
+    <header id="mainHeader">
+        <div class="logo">
+            <img src="logo.png" alt="ReportIT Logo" />
+        </div>
+        <nav>
+            <a href="#" id="homeLink" class="nav-link active">Home</a>
+            <a href="#" id="dashboardLink" class="nav-link">Dashboard</a>
+            <a href="#" id="emergencyLink" class="nav-link">Emergency</a>
+            <a href="#" id="contactLink" class="nav-link">Contact</a>
+            <a href="#" id="loginOpen" class="login-btn">Login</a>
+            <div id="userMenu" style="display:none;" class="user-menu">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userNameDisplay">Admin</span>
+                <a href="#" id="logout" class="logout-btn">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- GUEST HOME (hero + featured) -->
+    <div id="guestHome">
+        <section class="hero">
+            <h1>Report Issues.<br />Get Help. Stay Safe.</h1>
+            <p>A platform for reporting community and emergency concerns.</p>
+            <button id="startReportBtn">Start a Report</button>
+        </section>
+
+        <section class="featured">
+            <div class="featured-header">
+                <h2>Featured issues</h2>
+                <a href="#" id="seeAllLink">See all &gt;</a>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <img src="road.png" alt="Broken road" />
+                    <div class="card-content">
+                        <h3>Broken road</h3>
+                        <p>Reported 2 hours ago</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="light.png" alt="Street light" />
+                    <div class="card-content">
+                        <h3>Broken Street Light</h3>
+                        <p>Reported yesterday</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="drainage.png" alt="Drainage" />
+                    <div class="card-content">
+                        <h3>Drainage blockage</h3>
+                        <p>Reported 2 days ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDITIONAL INFO SECTION FOR GUEST -->
+        <section class="guest-info">
+            <div class="info-box">
+                <div class="info-icon"><i class="bi bi-bullseye"></i></div>
+                <h3>Easy to Use</h3>
+                <p>Simple interface to report community issues in seconds</p>
+            </div>
+            <div class="info-box">
+                <div class="info-icon"><i class="bi bi-lightning-charge"></i></div>
+                <h3>Fast Response</h3>
+                <p>Reports are processed quickly by authorities</p>
+            </div>
+            <div class="info-box">
+                <div class="info-icon"><i class="bi bi-shield-lock"></i></div>
+                <h3>Secure & Private</h3>
+                <p>Your personal information is kept safe and secure</p>
+            </div>
+            <div class="info-box">
+                <div class="info-icon"><i class="bi bi-globe-americas"></i></div>
+                <h3>Community Focused</h3>
+                <p>Help improve your neighborhood and community</p>
+            </div>
+        </section>
+
+        <!-- STATISTICS SECTION -->
+        <section class="guest-stats">
+            <h2>ReportIT Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>2,547</h4>
+                    <p>Reports Submitted</p>
+                </div>
+                <div class="stat-item">
+                    <h4>1,892</h4>
+                    <p>Issues Resolved</p>
+                </div>
+                <div class="stat-item">
+                    <h4>98%</h4>
+                    <p>User Satisfaction</p>
+                </div>
+                <div class="stat-item">
+                    <h4>24/7</h4>
+                    <p>Support Available</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section class="guest-testimonials">
+            <h2>Community Feedback</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"ReportIT made it so easy to report the broken streetlight. Within hours, it was fixed!"</p>
+                    <p class="testimonial-author">- Maria Santos</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"Great platform! The tracking system let me monitor the status of my report in real-time."</p>
+                    <p class="testimonial-author">- Juan Dela Cruz</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"Love how quick the response was. This is exactly what our community needed."</p>
+                    <p class="testimonial-author">- Rosa Garcia</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"Best platform for community reporting. Very user-friendly and effective!"</p>
+                    <p class="testimonial-author">- Pedro Reyes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="guest-faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>❓ How do I submit a report?</h4>
+                    <p>Simply create an account, click "Submit Report", fill in the details, and submit. You'll get a report ID to track progress.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ How long does it take to resolve issues?</h4>
+                    <p>Most issues are resolved within 7-14 days depending on the severity and nature of the report.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ Is my information safe?</h4>
+                    <p>Yes, we use industry-standard encryption and never share your personal data with third parties.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ Can I remain anonymous?</h4>
+                    <p>Yes, you can submit reports anonymously. However, providing contact info helps us follow up with you.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer id="mainFooter">
+            <div class="footer-top">
+                <div>
+                    <h3>ReportIT</h3>
+                    ©2026 ReportIT Official<br />
+                    Platform of Pasig City.
+                </div>
+                <div class="footer-links">
+                    <a href="#" id="aboutLink">About Us</a>
+                    <a href="#" id="aboutReportITLink">About ReportIT</a>
+                    <a href="#" id="contactFooterLink">Contact Us</a>
+                    <a href="#" id="termsLink">Terms &amp; Condition</a>
+                    <a href="#" id="privacyLink">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- LOGGED-IN HOME -->
+    <div id="loggedInHome" style="display:none;" class="main-content-wrapper">
+        <section class="logged-home">
+            <div class="logged-welcome">
+                <div class="welcome-text">
+                    <p class="welcome-greeting">Good day,</p>
+                    <h1 id="welcomeName">Admin</h1>
+                    <p class="welcome-sub">What would you like to do today?</p>
+                </div>
+                <div class="welcome-stats">
+                    <div class="stat-chip"><span class="stat-num">3</span><span class="stat-label">Reports</span></div>
+                    <div class="stat-chip pending-chip"><span class="stat-num">1</span><span class="stat-label">Pending</span></div>
+                    <div class="stat-chip resolved-chip"><span class="stat-num">1</span><span class="stat-label">Resolved</span></div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="qa-btn primary-qa" id="startReportBtnLogged">
+                    <span class="qa-icon"><i class="bi bi-clipboard-plus"></i></span>
+                    <span class="qa-text">
+                        <strong>Submit a Report</strong>
+                        <small>Report a community issue</small>
+                    </span>
+                </button>
+                <button class="qa-btn" id="trackReportBtnLogged">
+                    <span class="qa-icon"><i class="bi bi-search"></i></span>
+                    <span class="qa-text">
+                        <strong>Track My Report</strong>
+                        <small>Check report status</small>
+                    </span>
+                </button>
+                <button class="qa-btn" id="viewDashboardBtn">
+                    <span class="qa-icon"><i class="bi bi-bar-chart-line"></i></span>
+                    <span class="qa-text">
+                        <strong>View Dashboard</strong>
+                        <small>Browse all reports</small>
+                    </span>
+                </button>
+                <button class="qa-btn danger-qa" id="emergencyQaBtn">
+                    <span class="qa-icon"><i class="bi bi-exclamation-octagon"></i></span>
+                    <span class="qa-text">
+                        <strong>Emergency</strong>
+                        <small>Hotlines &amp; alerts</small>
+                    </span>
+                </button>
+            </div>
+
+            <div class="recent-section">
+                <div class="recent-header">
+                    <h3>Recent Reports</h3>
+                    <a href="#" id="seeAllLoggedLink">See all &gt;</a>
+                </div>
+                <div class="recent-cards" id="recentCards">
+                    <div class="recent-card" data-status="progress">
+                        <img src="drainage.png" alt="Drainage" />
+                        <div class="rc-info">
+                            <span class="rc-id">REP-0350</span>
+                            <p>Drainage Blockage</p>
+                            <span class="status progress">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="recent-card" data-status="resolved">
+                        <img src="road.png" alt="Road" />
+                        <div class="rc-info">
+                            <span class="rc-id">REP-0351</span>
+                            <p>Broken Road</p>
+                            <span class="status resolved">Resolved</span>
+                        </div>
+                    </div>
+                    <div class="recent-card" data-status="pending">
+                        <img src="light.png" alt="Light" />
+                        <div class="rc-info">
+                            <span class="rc-id">REP-0352</span>
+                            <p>Broken Street Light</p>
+                            <span class="status pending">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTIVITY FEED -->
+            <div class="activity-feed-section">
+                <h3>Activity Feed</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-icon"><i class="bi bi-check-circle-fill"></i></span>
+                        <div class="activity-content">
+                            <p>Report <strong>REP-0351</strong> has been marked as Resolved</p>
+                            <small>2 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon"><i class="bi bi-pencil-square"></i></span>
+                        <div class="activity-content">
+                            <p>New comment on report <strong>REP-0350</strong></p>
+                            <small>5 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon"><i class="bi bi-arrow-repeat"></i></span>
+                        <div class="activity-content">
+                            <p>Report <strong>REP-0350</strong> status updated to In Progress</p>
+                            <small>1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SUBMIT REPORT SECTION -->
+    <section class="submit-report main-content-wrapper" id="submitReportSection" style="display:none;">
+        <div class="contact-hero">
+            <h1><i class="bi bi-clipboard-plus"></i> Submit a Report</h1>
+            <p>Help us improve your community by reporting issues you've encountered</p>
+        </div>
+
+        <div class="submit-report-container">
+            <div class="report-form-wrapper">
+                <div class="form-section">
+                    <h2>Report Details</h2>
+                    
+                    <form class="submit-report-form" id="submitReportFormMain">
+                        <div class="form-group">
+                            <label for="reportCategory">Category *</label>
+                            <select id="reportCategory" class="form-control" required>
+                                <option value="">-- Select Category --</option>
+                                <option value="Road Damage">🛣️ Road Damage</option>
+                                <option value="Street Light">Street Light</option>
+                                <option value="Drainage">💧 Drainage / Flooding</option>
+                                <option value="Garbage">Garbage / Waste</option>
+                                <option value="Sidewalk">🚶 Sidewalk / Walkway</option>
+                                <option value="Noise">🔊 Noise Complaint</option>
+                                <option value="Traffic">🚗 Traffic Issue</option>
+                                <option value="Other">❓ Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportLocation">Location *</label>
+                            <input type="text" id="reportLocation" class="form-control" placeholder="e.g. Brgy. Kapitolyo, Sta. Rosa Avenue, Pasig City" required />
+                            <small class="form-text">Be as specific as possible to help us locate the issue</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reportPriority">Priority Level</label>
+                                <select id="reportPriority" class="form-control">
+                                    <option value="low">Low - Can wait</option>
+                                    <option value="medium" selected>Medium - Soon would be good</option>
+                                    <option value="high">High - Urgent</option>
+                                    <option value="critical">Critical - Safety hazard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reportVisibility">Report Visibility</label>
+                                <select id="reportVisibility" class="form-control">
+                                    <option value="public" selected>Public - Visible to all</option>
+                                    <option value="private">Private - Only for authorities</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportDescription">Description *</label>
+                            <textarea id="reportDescription" class="form-control" rows="5" placeholder="Describe the issue in detail. What is the problem? How does it affect the community? Any additional details?" required></textarea>
+                            <small class="form-text">Detailed descriptions help authorities respond faster</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportPhoto">Attach Photos (Optional)</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="reportPhoto" accept="image/*" class="file-input" />
+                                <div class="file-input-label">
+                                    <span class="file-icon">📸</span>
+                                    <span class="file-text">Click to upload or drag and drop</span>
+                                    <small>PNG, JPG, GIF up to 5MB</small>
+                                </div>
+                            </div>
+                            <div id="photoPreview" class="photo-preview" style="display:none;">
+                                <img id="previewImg" src="" alt="Preview" />
+                                <button type="button" class="remove-photo-btn" onclick="removePhoto()">✕ Remove</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportContactName">Your Name (Optional)</label>
+                            <input type="text" id="reportContactName" class="form-control" placeholder="Your name (leave blank to remain anonymous)" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportContactEmail">Your Email (Optional)</label>
+                            <input type="email" id="reportContactEmail" class="form-control" placeholder="your.email@example.com (for follow-ups)" />
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="reportAgree" checked />
+                            <label for="reportAgree">I agree to share this report with the community and relevant authorities</label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Submit Report</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelReport()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="report-sidebar">
+                    <div class="info-card">
+                        <h3>📝 How It Works</h3>
+                        <ol class="steps-list">
+                            <li>Select the category of your issue</li>
+                            <li>Provide an accurate location</li>
+                            <li>Describe the problem clearly</li>
+                            <li>Add photos if possible</li>
+                            <li>Submit and get a report ID</li>
+                            <li>Track progress in real-time</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>⏱️ Response Times</h3>
+                        <div class="response-time-item">
+                            <span class="badge critical">Critical</span>
+                            <p>24 hours</p>
+                        </div>
+                        <div class="response-time-item">
+                            <span class="badge high">High</span>
+                            <p>2-3 days</p>
+                        </div>
+                        <div class="response-time-item">
+                            <span class="badge medium">Medium</span>
+                            <p>5-7 days</p>
+                        </div>
+                        <div class="response-time-item">
+                            <span class="badge low">Low</span>
+                            <p>7-14 days</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="bi bi-lightbulb"></i> Tips for Better Reports</h3>
+                        <ul class="tips-list">
+                            <li>✓ Be specific with location</li>
+                            <li>✓ Include clear photos</li>
+                            <li>✓ Describe impact clearly</li>
+                            <li>✓ Mention any hazards</li>
+                            <li>✓ Provide contact info</li>
+                            <li>✓ Check existing reports</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card warning">
+                        <h3>⚠️ Important Note</h3>
+                        <p>For life-threatening emergencies, please call 911 immediately instead of submitting a report through this platform.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENT SUBMISSIONS -->
+            <div class="recent-submissions">
+                <h3>Your Recent Reports</h3>
+                <div class="recent-reports-list" id="recentReportsList">
+                    <div class="recent-report-card">
+                        <div class="recent-report-header">
+                            <div>
+                                <span class="report-id">REP-0350</span>
+                                <p>Drainage Blockage</p>
+                            </div>
+                            <span class="status-badge progress">In Progress</span>
+                        </div>
+                        <p class="report-location"><i class="bi bi-geo-alt-fill"></i> Brgy. Kapitolyo, Sta. Rosa Ave</p>
+                        <small>Submitted 2 days ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard main-content-wrapper" id="dashboardSection" style="display:none;">
+        <h2>Community Reports</h2>
+        <div class="dashboard-controls">
+            <div class="filters">
+                <button class="filter-btn active" data-status="all">All</button>
+                <button class="filter-btn" data-status="pending">Pending</button>
+                <button class="filter-btn" data-status="progress">In Progress</button>
+                <button class="filter-btn" data-status="resolved">Resolved</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="reportSearch" placeholder="&#128269; Search by ID or issue..." />
+            </div>
+        </div>
+
+        <!-- DASHBOARD STATS -->
+        <div class="dashboard-stats">
+            <div class="dash-stat-card">
+                <span class="dash-stat-icon"><i class="bi bi-bar-chart-line"></i></span>
+                <p class="dash-stat-label">Total Reports</p>
+                <p class="dash-stat-value">156</p>
+            </div>
+            <div class="dash-stat-card">
+                <span class="dash-stat-icon"><i class="bi bi-hourglass-split"></i></span>
+                <p class="dash-stat-label">Pending</p>
+                <p class="dash-stat-value">23</p>
+            </div>
+            <div class="dash-stat-card">
+                <span class="dash-stat-icon"><i class="bi bi-gear"></i></span>
+                <p class="dash-stat-label">In Progress</p>
+                <p class="dash-stat-value">45</p>
+            </div>
+            <div class="dash-stat-card">
+                <span class="dash-stat-icon"><i class="bi bi-check-circle"></i></span>
+                <p class="dash-stat-label">Resolved</p>
+                <p class="dash-stat-value">88</p>
+            </div>
+        </div>
+
+        <!-- REPORT GRID - SIMPLIFIED -->
+        <div class="report-grid" id="reportGrid">
+            <div class="report-card-simple" data-status="progress" data-id="REP-0350" data-title="Drainage Blockage" data-category="Drainage / Flooding" data-location="Brgy. Kapitolyo, Sta. Rosa Ave" data-description="The drainage system is blocked and causing water accumulation. This needs immediate attention as it affects pedestrian safety." data-image="drainage.png" onclick="openReportModal(this)">
+                <div class="report-card-simple-top">
+                    <span class="report-id-badge">REP-0350</span>
+                    <span class="status progress">In Progress</span>
+                </div>
+                <p class="report-card-simple-title">Drainage Blockage</p>
+            </div>
+
+            <div class="report-card-simple" data-status="resolved" data-id="REP-0351" data-title="Broken Road" data-category="Road Damage" data-location="Makati Avenue, Pasig City" data-description="Road surface has multiple cracks and potholes that have been repaired." data-image="road.png" onclick="openReportModal(this)">
+                <div class="report-card-simple-top">
+                    <span class="report-id-badge">REP-0351</span>
+                    <span class="status resolved">Resolved</span>
+                </div>
+                <p class="report-card-simple-title">Broken Road</p>
+            </div>
+
+            <div class="report-card-simple" data-status="pending" data-id="REP-0352" data-title="Broken Street Light" data-category="Street Light" data-location="JP Rizal St, Pasig City" data-description="Street light is not functioning, making the area dark and unsafe at night." data-image="light.png" onclick="openReportModal(this)">
+                <div class="report-card-simple-top">
+                    <span class="report-id-badge">REP-0352</span>
+                    <span class="status pending">Pending</span>
+                </div>
+                <p class="report-card-simple-title">Broken Street Light</p>
+            </div>
+        </div>
+        <div id="noResults" style="display:none;" class="no-results">No reports found.</div>
+
+        <!-- DASHBOARD RECENT ACTIVITY -->
+        <div class="dashboard-recent-activity">
+            <h3>Recent Activity</h3>
+            <div class="activity-timeline">
+                <div class="timeline-item">
+                    <span class="timeline-marker"></span>
+                    <div class="timeline-content">
+                        <p><strong>REP-0350</strong> - Status changed to In Progress</p>
+                        <small>3 hours ago</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-marker"></span>
+                    <div class="timeline-content">
+                        <p><strong>REP-0351</strong> - Resolved</p>
+                        <small>1 day ago</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-marker"></span>
+                    <div class="timeline-content">
+                        <p><strong>REP-0352</strong> - New report submitted</p>
+                        <small>2 days ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACK REPORT SECTION -->
+    <section class="track-report main-content-wrapper" id="trackReportSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>Track Your Report</h1>
+            <p>Enter your Report ID to check the status of your submission.</p>
+        </div>
+        <div class="track-container">
+            <div class="track-search">
+                <input type="text" id="trackInput" placeholder="Enter Report ID (e.g. REP-0350)" />
+                <button id="trackSearchBtn">Search</button>
+            </div>
+            <div id="trackResult" class="track-result" style="display:none;"></div>
+
+            <!-- TRACKING GUIDE -->
+            <div class="track-guide">
+                <h3>How to Track Your Report</h3>
+                <div class="guide-steps">
+                    <div class="guide-step">
+                        <span class="step-number">1</span>
+                        <h4>Enter Your Report ID</h4>
+                        <p>Use the ID provided when you submitted your report</p>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">2</span>
+                        <h4>View Status</h4>
+                        <p>See the current status: Pending, In Progress, or Resolved</p>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">3</span>
+                        <h4>Get Updates</h4>
+                        <p>Receive notifications as your report progresses</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SAMPLE REPORTS -->
+            <div class="sample-reports">
+                <h3>Sample Report IDs to Track</h3>
+                <div class="sample-list">
+                    <div class="sample-item" onclick="document.getElementById('trackInput').value='REP-0350';document.getElementById('trackSearchBtn').click()">
+                        <span>REP-0350</span>
+                        <small>Drainage Blockage</small>
+                    </div>
+                    <div class="sample-item" onclick="document.getElementById('trackInput').value='REP-0351';document.getElementById('trackSearchBtn').click()">
+                        <span>REP-0351</span>
+                        <small>Broken Road</small>
+                    </div>
+                    <div class="sample-item" onclick="document.getElementById('trackInput').value='REP-0352';document.getElementById('trackSearchBtn').click()">
+                        <span>REP-0352</span>
+                        <small>Broken Street Light</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCAL NEWS SECTION -->
+    <section class="threads main-content-wrapper" id="threadsSection" style="display:none;">
+        <div class="contact-hero">
+            <h1><i class="bi bi-newspaper"></i> Local News</h1>
+            <p>Stay updated with the latest community news and announcements</p>
+        </div>
+        <div class="threads-container">
+            <div class="threads-main">
+                <div class="threads-controls" style="justify-content: flex-end;">
+                    <div class="threads-filter">
+                        <span class="threads-filter-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" id="threadSearch" placeholder="Search news..." />
+                    </div>
+                </div>
+
+                <!-- hidden button to avoid JS crash -->
+                <button id="createThreadBtn" style="display:none;"></button>
+
+                <div class="threads-tabs">
+                    <button class="thread-tab active" data-filter="all">All News</button>
+                    <button class="thread-tab" data-filter="recent">Recent</button>
+                    <button class="thread-tab" data-filter="popular">Most Liked</button>
+                </div>
+
+                <div class="threads-list" id="threadsList">
+                    <!-- NEWS ARTICLE 1 -->
+                    <div class="thread-item">
+                        <div class="thread-badge">
+                            <span class="badge-icon"><i class="bi bi-pin-map"></i></span>
+                            <span class="badge-text">Announcement</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 2 hours ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🛣️ Road Update</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Sta. Rosa Avenue Road Repair — Schedule Update</h3>
+                            <p class="thread-content">The road repair along Sta. Rosa Avenue will commence on Monday, April 28. Expect lane closures from 8AM–5PM. Motorists are advised to take alternate routes via JP Rizal Street.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">24 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">12 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 2 -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#3b82b3;">
+                            <span class="badge-icon"><i class="bi bi-lightbulb"></i></span>
+                            <span class="badge-text">Update</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 5 hours ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category"><i class="bi bi-lightbulb"></i> Street Lights</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Street Light Replacement Program — Phase 2</h3>
+                            <p class="thread-content">Phase 2 of the LED street light replacement program will cover Makati Avenue and surrounding streets. Installation is expected to be completed within 2 weeks. Affected areas will be listed on the official website.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">18 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">8 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 3 -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#22c55e;">
+                            <span class="badge-icon"><i class="bi bi-check-circle-fill"></i></span>
+                            <span class="badge-text">Resolved</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 1 day ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">💧 Drainage</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Drainage Blockage at Kapitolyo — Now Cleared</h3>
+                            <p class="thread-content">The drainage blockage reported along Kapitolyo has been successfully cleared by the city engineering team. Regular maintenance has been scheduled every quarter to prevent recurrence.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">47 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">31 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 4 -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#f59e0b;">
+                            <span class="badge-icon">⚠️</span>
+                            <span class="badge-text">Advisory</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 2 days ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category"><i class="bi bi-trash"></i> Waste Collection</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Revised Garbage Collection Schedule — April 2026</h3>
+                            <p class="thread-content">Due to the upcoming holidays, garbage collection schedules have been adjusted. Please check the revised schedule posted at your barangay hall or visit the official city website for details per zone.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">35 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">19 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 5 — NEW FACILITY -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#0d9488;">
+                            <span class="badge-icon"><i class="bi bi-building-gear"></i></span>
+                            <span class="badge-text">New Facility</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 3 days ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🏗️ Infrastructure</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">New Multi-Purpose Covered Court Opens in Brgy. Pinagbuhatan</h3>
+                            <p class="thread-content">The newly constructed multi-purpose covered court in Barangay Pinagbuhatan is now open to the public. The facility can accommodate basketball games, community events, and relief operations. It is equipped with flood-resilient flooring and solar-powered lighting. Residents may coordinate with the barangay office for scheduling of events and usage.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">89 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">43 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 6 — HEALTH CENTER -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#ef4444;">
+                            <span class="badge-icon"><i class="bi bi-hospital"></i></span>
+                            <span class="badge-text">Health</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 4 days ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🏥 Health Services</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Upgraded Barangay Health Center Now Operational — Brgy. Kapitolyo</h3>
+                            <p class="thread-content">The Barangay Kapitolyo Health Center has completed its renovation and is now fully operational. The upgraded facility features a new consultation room, medicine stockroom, and birthing clinic. Free medical consultations are available every Monday to Friday, 8AM–5PM. Residents with PhilHealth cards will be prioritized. Walk-ins are also welcome.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">112 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">67 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 7 — FINANCIAL ASSISTANCE -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#7c3aed;">
+                            <span class="badge-icon"><i class="bi bi-cash-coin"></i></span>
+                            <span class="badge-text">Aid Program</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 5 days ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">💰 Financial Aid</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Pasig City Financial Assistance Program — May 2026 Application Now Open</h3>
+                            <p class="thread-content">The Pasig City Social Welfare and Development Office (CSWDO) is now accepting applications for the May 2026 Financial Assistance Program. Eligible residents include solo parents, senior citizens, persons with disabilities (PWDs), and indigent families. Assistance of up to ₱3,000 per qualified household is available. Applicants must bring a valid ID, barangay certificate of indigency, and proof of residency. Applications are accepted at the City Hall Social Services window, Monday to Friday, 8AM–4PM only.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">204 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">138 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 8 — SCHOLARSHIP -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#2563eb;">
+                            <span class="badge-icon"><i class="bi bi-mortarboard"></i></span>
+                            <span class="badge-text">Scholarship</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 6 days ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🎓 Education</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Pasig City Scholarship Program — SY 2026–2027 Applications Now Accepting</h3>
+                            <p class="thread-content">The Pasig City Scholarship Program (PCSP) is now open for applications for School Year 2026–2027. Eligible applicants must be Pasig City residents with a general average of 85% or higher, currently enrolled or planning to enroll in any state university or college (SUC). Monthly stipends, tuition assistance, and school supply allowances are included. Submit requirements at the City Scholarship Office, Room 305, Pasig City Hall. Deadline is May 31, 2026.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">176 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">95 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 9 — LIVELIHOOD -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#059669;">
+                            <span class="badge-icon">🛠️</span>
+                            <span class="badge-text">Livelihood</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 1 week ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🛠️ Livelihood</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Free Livelihood Training & Seed Capital Grants — Register Now</h3>
+                            <p class="thread-content">The Pasig City Livelihood and Development Office (CLDO) is offering free skills training programs including Bread & Pastry Production, Shielded Metal Arc Welding, and Beauty Care NC II this May 2026. Upon completion, qualified graduates may apply for seed capital grants of up to ₱5,000 to start their micro-businesses. Registration is open to all Pasig residents aged 18–60. Register at your respective barangay hall or visit the CLDO office at the City Hall complex.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">158 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">72 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- NEWS ARTICLE 10 — COMMUNITY PARK -->
+                    <div class="thread-item">
+                        <div class="thread-badge" style="background:#16a34a;">
+                            <span class="badge-icon"><i class="bi bi-tree"></i></span>
+                            <span class="badge-text">New Facility</span>
+                        </div>
+                        <div class="thread-header">
+                            <div class="thread-author">
+                                <span class="author-avatar">LGU</span>
+                                <div class="author-info">
+                                    <p class="author-name">LGU Pasig City</p>
+                                    <small>Posted 1 week ago</small>
+                                </div>
+                            </div>
+                            <span class="thread-category">🌳 Environment</span>
+                        </div>
+                        <div class="thread-body">
+                            <h3 class="thread-title">Linear Park Along Pasig River Expansion — Phase 3 Groundbreaking</h3>
+                            <p class="thread-content">The Pasig City government broke ground last April 18 for Phase 3 of the Pasig River Linear Park expansion. The project will add 1.2 kilometers of pedestrian walkways, jogging paths, native tree planting areas, and children's play zones along the riverbank from Brgy. Rosario to Brgy. Ugong. The expansion is expected to be completed by December 2026 and will provide residents with a safe, green recreational space.</p>
+                        </div>
+                        <div class="thread-stats">
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-heart-fill"></i></span><span class="stat-label">143 Likes</span></span>
+                            <span class="stat"><span class="stat-icon"><i class="bi bi-chat-dots"></i></span><span class="stat-label">58 Comments</span></span>
+                        </div>
+                        <div class="thread-actions">
+                            <button class="action-btn"><i class="bi bi-heart"></i> Like</button>
+                            <button class="action-btn">💬 Comment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="threads-pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <span class="pagination-dots">...</span>
+                    <button class="pagination-btn">Next →</button>
+                </div>
+            </div>
+
+            <!-- NEWS SIDEBAR -->
+            <div class="threads-sidebar">
+                <div class="sidebar-card trending">
+                    <h3 class="sidebar-card-title">🔥 Trending Topics</h3>
+                    <div class="trending-list">
+                        <a href="#" class="trending-item"><span class="trending-count">204</span><span class="trending-name">Financial Aid</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">176</span><span class="trending-name">Scholarship</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">158</span><span class="trending-name">Livelihood</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">143</span><span class="trending-name">Linear Park</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">112</span><span class="trending-name">Health Services</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">89</span><span class="trending-name">New Facilities</span></a>
+                        <a href="#" class="trending-item"><span class="trending-count">47</span><span class="trending-name">Drainage Issues</span></a>
+                    </div>
+                </div>
+
+                <div class="sidebar-card categories">
+                    <h3 class="sidebar-card-title">📂 Categories</h3>
+                    <div class="categories-list">
+                        <a href="#" class="category-item"><span>💰 Financial Aid</span><span class="category-badge">12</span></a>
+                        <a href="#" class="category-item"><span>🏗️ Infrastructure</span><span class="category-badge">9</span></a>
+                        <a href="#" class="category-item"><span>🏥 Health Services</span><span class="category-badge">8</span></a>
+                        <a href="#" class="category-item"><span>🎓 Education</span><span class="category-badge">7</span></a>
+                        <a href="#" class="category-item"><span>🛠️ Livelihood</span><span class="category-badge">6</span></a>
+                        <a href="#" class="category-item"><span>🛣️ Road Issues</span><span class="category-badge">24</span></a>
+                        <a href="#" class="category-item"><span><i class="bi bi-lightbulb"></i> Street Lights</span><span class="category-badge">18</span></a>
+                        <a href="#" class="category-item"><span>💧 Drainage</span><span class="category-badge">31</span></a>
+                        <a href="#" class="category-item"><span>🌳 Environment</span><span class="category-badge">11</span></a>
+                        <a href="#" class="category-item"><span>📢 Announcements</span><span class="category-badge">9</span></a>
+                    </div>
+                </div>
+
+                <div class="sidebar-card stats">
+                    <h3 class="sidebar-card-title"><i class="bi bi-bar-chart-line"></i> News Stats</h3>
+                    <div class="stats-box">
+                        <div class="stat-row"><span>Total Articles</span><strong>53</strong></div>
+                        <div class="stat-row"><span>This Week</span><strong>10 new</strong></div>
+                        <div class="stat-row"><span>Total Comments</span><strong>2,187</strong></div>
+                        <div class="stat-row"><span>Total Likes</span><strong>7,342</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SETTINGS SECTION -->
+    <section class="settings main-content-wrapper" id="settingsSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>Settings</h1>
+            <p>Manage your account and preferences</p>
+        </div>
+        <div class="settings-container">
+            <!-- Account Settings Card -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <h3><i class="bi bi-person-circle"></i> Account Settings</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-item">
+                        <label>Full Name</label>
+                        <input type="text" id="settingsName" placeholder="Enter your full name" />
+                    </div>
+                    <div class="settings-item">
+                        <label>Email Address</label>
+                        <input type="email" id="settingsEmail" placeholder="your.email@example.com" />
+                    </div>
+                    <div class="settings-item">
+                        <label>Phone Number</label>
+                        <input type="tel" id="settingsPhone" placeholder="+63 9XX XXXX XXX" />
+                    </div>
+                    <div class="settings-item">
+                        <label>Location</label>
+                        <input type="text" id="settingsLocation" placeholder="e.g. Brgy. Kapitolyo, Pasig City" />
+                    </div>
+                    <button class="settings-btn" id="saveAccountBtn">Save Account Settings</button>
+                </div>
+            </div>
+
+            <!-- Notification Settings Card -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <h3><i class="bi bi-bell"></i> Notifications & Alerts</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">Email Notifications</span>
+                            <small>Get updates via email</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">Report Updates</span>
+                            <small>Updates on your submitted reports</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reportUpdates" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">Emergency Alerts</span>
+                            <small>Critical community alerts</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="emergencyAlerts" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">SMS Notifications</span>
+                            <small>Text message alerts</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <button class="settings-btn" id="saveNotificationsBtn">Save Preferences</button>
+                </div>
+            </div>
+
+            <!-- Privacy & Data Card -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <h3><i class="bi bi-shield-lock"></i> Privacy & Data</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">Profile Visibility</span>
+                            <small>Let others see your profile</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="profileVisibility" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle">
+                        <div class="toggle-label">
+                            <span class="toggle-title">Data Collection</span>
+                            <small>Help us improve with usage data</small>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="dataCollection" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Card -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <h3>🔐 Security</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-info">
+                        <p><strong>Last Login:</strong> Today at 2:45 PM</p>
+                        <p><strong>Active Sessions:</strong> 1</p>
+                    </div>
+                    <button class="settings-btn secondary-btn" id="changePasswordBtn">Change Password</button>
+                    <button class="settings-btn secondary-btn" id="twoFactorBtn">Two-Factor Authentication</button>
+                    <button class="settings-btn secondary-btn" id="activitiesBtn">View Login Activities</button>
+                </div>
+            </div>
+
+            <!-- Preferences Card -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <h3><i class="bi bi-sliders"></i> Preferences</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-item">
+                        <label>Theme</label>
+                        <select id="themeSelect" class="settings-select">
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode</option>
+                            <option value="auto">Auto (System Default)</option>
+                        </select>
+                    </div>
+                    <div class="settings-item">
+                        <label>Language</label>
+                        <select id="languageSelect" class="settings-select">
+                            <option value="en">English</option>
+                            <option value="tl">Tagalog</option>
+                        </select>
+                    </div>
+                    <button class="settings-btn secondary-btn" id="savePreferencesBtn">Save Preferences</button>
+                </div>
+            </div>
+
+            <!-- Danger Zone Card -->
+            <div class="settings-card danger-card">
+                <div class="settings-card-header danger-header">
+                    <h3>⚠️ Danger Zone</h3>
+                </div>
+                <div class="settings-content">
+                    <p class="danger-text">Irreversible actions - proceed with caution</p>
+                    <button class="settings-btn danger-btn" id="deleteAccountBtn">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about main-content-wrapper" id="aboutSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>About Us</h1>
+            <p>Learn More About Our Team and Mission</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Who We Are</h3>
+                <p>ReportIT is a community-focused platform dedicated to creating safer and more responsive neighborhoods. We provide residents with an easy-to-use system for reporting community issues and emergencies.</p>
+                <h3>Our Mission</h3>
+                <p>Our mission is to empower communities by providing a reliable platform where residents can report concerns quickly and efficiently.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-reportit main-content-wrapper" id="aboutReportITSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>About ReportIT</h1>
+            <p>How ReportIT Works and What We Do</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>What is ReportIT?</h3>
+                <p>ReportIT is a community-driven reporting platform designed to help residents report non-emergency issues and emergency situations within their local area.</p>
+                <h3>Easy Reporting</h3>
+                <p>Submit reports with a few taps. Attach photos, describe the issue, and let the proper authorities handle the rest.</p>
+                <h3>Real-Time Tracking</h3>
+                <p>Track the status of submitted reports in real time. Users receive updates as their reports are reviewed, processed, and resolved.</p>
+                <h3>Community Impact</h3>
+                <p>By using ReportIT, residents actively participate in improving their community. Every report contributes to faster action and a safer environment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="terms main-content-wrapper" id="termsSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>Terms &amp; Conditions</h1>
+            <p>Please read these terms carefully before using ReportIT.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Agreement</h3>
+                <p>By using ReportIT, you agree to comply with these Terms and Conditions.</p>
+                <h3>User Responsibilities</h3>
+                <p>Users must provide accurate and truthful information when submitting reports. False, misleading, or abusive reports are strictly prohibited.</p>
+                <h3>Acceptable Use</h3>
+                <p>ReportIT should only be used for lawful purposes related to community and public safety reporting.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="privacy main-content-wrapper" id="privacySection" style="display:none;">
+        <div class="contact-hero">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy matters to us.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Data Collection</h3>
+                <p>We collect only the information necessary to process your reports and improve the platform experience.</p>
+                <h3>Data Usage</h3>
+                <p>Your data is used solely for report processing and is never sold to third parties.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="emergency main-content-wrapper" id="emergencySection" style="display:none;">
+        <h2 class="emergency-title">Emergency Services</h2>
+        <div class="emergency-alert">
+            <div class="alert-icon"><i class="bi bi-exclamation-octagon-fill"></i></div>
+            <div>
+                <p class="alert-text">Is this an emergency situation?</p>
+                <div class="call-911-wrapper">
+                    <a href="tel:911" class="call-911-btn" id="call911Btn">
+                        <div class="call-911-pulse"></div>
+                        <i class="bi bi-telephone-fill"></i>
+                        <span>Call 911 Now</span>
+                    </a>
+                    <p class="call-911-note">Tap to open your phone dialer</p>
+                </div>
+            </div>
+        </div>
+        <div class="hotlines-card">
+            <h3 style="margin-bottom:15px; color:#1f4e79;">Emergency Hotlines</h3>
+            <div class="hotline-item">
+                <div class="hotline-info">
+                    <span class="hotline-org-icon fire-icon"><i class="bi bi-fire"></i></span>
+                    <span><strong>BFP Pasig</strong> – Bureau of Fire Protection</span>
+                </div>
+                <div class="hotline-icons">
+                    <a href="tel:02 8643 3119" class="hotline-action-btn call-btn" title="Call"><i class="bi bi-telephone-fill"></i></a>
+                    <button class="hotline-action-btn copy-btn" onclick="copyToClipboard('(02) 8643 3119')" title="Copy number"><i class="bi bi-clipboard"></i></button>
+                </div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-info">
+                    <span class="hotline-org-icon police-icon"><i class="bi bi-shield-fill"></i></span>
+                    <span><strong>Pasig City Police</strong></span>
+                </div>
+                <div class="hotline-icons">
+                    <a href="tel:054 472 3000" class="hotline-action-btn call-btn" title="Call"><i class="bi bi-telephone-fill"></i></a>
+                    <button class="hotline-action-btn copy-btn" onclick="copyToClipboard('(054) 472 3000')" title="Copy number"><i class="bi bi-clipboard"></i></button>
+                </div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-info">
+                    <span class="hotline-org-icon medical-icon"><i class="bi bi-hospital-fill"></i></span>
+                    <span><strong>Pasig City General Hospital</strong></span>
+                </div>
+                <div class="hotline-icons">
+                    <a href="tel:02 8643 7777" class="hotline-action-btn call-btn" title="Call"><i class="bi bi-telephone-fill"></i></a>
+                    <button class="hotline-action-btn copy-btn" onclick="copyToClipboard('(02) 8643 7777')" title="Copy number"><i class="bi bi-clipboard"></i></button>
+                </div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-info">
+                    <span class="hotline-org-icon disaster-icon"><i class="bi bi-cloud-lightning-rain-fill"></i></span>
+                    <span><strong>PDRRMO</strong> – Disaster Risk Reduction</span>
+                </div>
+                <div class="hotline-icons">
+                    <a href="tel:02 8643 0000" class="hotline-action-btn call-btn" title="Call"><i class="bi bi-telephone-fill"></i></a>
+                    <button class="hotline-action-btn copy-btn" onclick="copyToClipboard('(02) 8643 0000')" title="Copy number"><i class="bi bi-clipboard"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADDITIONAL EMERGENCY INFO -->
+        <div class="emergency-info-section">
+            <h3>Emergency Categories</h3>
+            <div class="emergency-grid">
+                <div class="emergency-category">
+                    <span class="emergency-cat-icon">🔥</span>
+                    <p><strong>Fire & Smoke</strong></p>
+                    <small>Call BFP Immediately</small>
+                </div>
+                <div class="emergency-category">
+                    <span class="emergency-cat-icon"><i class="bi bi-shield-check"></i></span>
+                    <p><strong>Crime & Safety</strong></p>
+                    <small>Call Police</small>
+                </div>
+                <div class="emergency-category">
+                    <span class="emergency-cat-icon"><i class="bi bi-truck-medical"></i></span>
+                    <p><strong>Medical Emergency</strong></p>
+                    <small>Call Ambulance</small>
+                </div>
+                <div class="emergency-category">
+                    <span class="emergency-cat-icon"><i class="bi bi-droplet"></i></span>
+                    <p><strong>Flooding</strong></p>
+                    <small>Contact City Hall</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAFETY TIPS -->
+        <div class="safety-tips">
+            <h3>Safety Tips</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>During Fire</h4>
+                    <p>Evacuate immediately, stay low to avoid smoke, call 911, and never use elevators.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>During Flooding</h4>
+                    <p>Move to higher ground, avoid walking through flowing water, and don't drive through flooded areas.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>During Crime</h4>
+                    <p>Go to a safe location, call police, describe the situation clearly, and cooperate with authorities.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>Medical Emergency</h4>
+                    <p>Call for help immediately, perform CPR if trained, provide first aid, and stay calm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact main-content-wrapper" id="contactSection" style="display:none;">
+        <div class="contact-hero">
+            <h1>Contact Us</h1>
+            <p>Have concerns or questions? Reach out to the ReportIT team.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> support@reportit.ph</p>
+                <p><strong>Phone:</strong> +63 912 345 6789</p>
+                <p><strong>Office:</strong> Pasig City Hall, Pasig City</p>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text" id="contactName" placeholder="Full Name" required>
+                <input type="email" id="contactEmail" placeholder="Email Address" required>
+                <input type="text" id="contactSubject" placeholder="Subject" required>
+                <textarea rows="5" id="contactMessage" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+        <!-- OFFICE HOURS -->
+        <div class="office-hours-section">
+            <h3>Office Hours</h3>
+            <div class="hours-grid">
+                <div class="hour-item">
+                    <p><strong>Monday - Friday</strong></p>
+                    <p>8:00 AM - 5:00 PM</p>
+                </div>
+                <div class="hour-item">
+                    <p><strong>Saturday</strong></p>
+                    <p>9:00 AM - 1:00 PM</p>
+                </div>
+                <div class="hour-item">
+                    <p><strong>Sunday & Holidays</strong></p>
+                    <p>Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MANAGE REPORTS SECTION ===== -->
+    <section class="admin-panel main-content-wrapper" id="manageReportsSection" style="display:none;">
+        <div class="admin-hero">
+            <div class="admin-hero-text">
+                <h1><i class="bi bi-folder2-open"></i> Manage Reports</h1>
+                <p>Review, update status, and delete community-submitted reports</p>
+            </div>
+            <div class="admin-hero-actions">
+                <input type="text" id="manageReportSearch" class="admin-search" placeholder="Search by ID or title..." />
+                <select id="manageReportFilter" class="admin-filter-select">
+                    <option value="all">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="admin-table-wrapper">
+            <table class="admin-table" id="manageReportsTable">
+                <thead>
+                    <tr>
+                        <th>Report ID</th>
+                        <th>Title / Category</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="manageReportsTbody">
+                    <tr data-id="REP-0350" data-title="Drainage Blockage" data-category="Drainage / Flooding" data-location="Brgy. Kapitolyo, Sta. Rosa Ave" data-description="The drainage system is blocked and causing water accumulation. This needs immediate attention as it affects pedestrian safety." data-status="progress" data-date="April 23, 2026">
+                        <td><span class="tbl-id-badge">REP-0350</span></td>
+                        <td><strong>Drainage Blockage</strong><br><small>Drainage / Flooding</small></td>
+                        <td>Brgy. Kapitolyo, Sta. Rosa Ave</td>
+                        <td><span class="status progress">In Progress</span></td>
+                        <td>April 23, 2026</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewReport(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditReport(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteReport(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-id="REP-0351" data-title="Broken Road" data-category="Road Damage" data-location="Makati Avenue, Pasig City" data-description="Road surface has multiple cracks and potholes that have been repaired." data-status="resolved" data-date="April 22, 2026">
+                        <td><span class="tbl-id-badge">REP-0351</span></td>
+                        <td><strong>Broken Road</strong><br><small>Road Damage</small></td>
+                        <td>Makati Avenue, Pasig City</td>
+                        <td><span class="status resolved">Resolved</span></td>
+                        <td>April 22, 2026</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewReport(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditReport(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteReport(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-id="REP-0352" data-title="Broken Street Light" data-category="Street Light" data-location="JP Rizal St, Pasig City" data-description="Street light is not functioning, making the area dark and unsafe at night." data-status="pending" data-date="April 21, 2026">
+                        <td><span class="tbl-id-badge">REP-0352</span></td>
+                        <td><strong>Broken Street Light</strong><br><small>Street Light</small></td>
+                        <td>JP Rizal St, Pasig City</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>April 21, 2026</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewReport(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditReport(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteReport(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="manageReportsNoResult" class="admin-no-result" style="display:none;">No reports match your search.</div>
+        </div>
+    </section>
+
+    <!-- ===== MANAGE USERS SECTION ===== -->
+    <section class="admin-panel main-content-wrapper" id="manageUsersSection" style="display:none;">
+        <div class="admin-hero">
+            <div class="admin-hero-text">
+                <h1><i class="bi bi-people"></i> Manage Users</h1>
+                <p>View, edit roles, and remove registered platform users</p>
+            </div>
+            <div class="admin-hero-actions">
+                <input type="text" id="manageUserSearch" class="admin-search" placeholder="Search by name or email..." />
+                <select id="manageUserFilter" class="admin-filter-select">
+                    <option value="all">All Roles</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="admin-table-wrapper">
+            <table class="admin-table" id="manageUsersTable">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="manageUsersTbody">
+                    <tr data-name="admin" data-email="admin@reportit.ph" data-role="admin" data-status="active">
+                        <td><div class="user-tbl-avatar admin-avatar">A</div></td>
+                        <td><strong>admin</strong></td>
+                        <td>admin@reportit.ph</td>
+                        <td><span class="role-badge role-admin">Admin</span></td>
+                        <td><span class="user-status active">● Active</span></td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewUser(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditUser(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteUser(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-name="user1" data-email="user1@reportit.ph" data-role="user" data-status="active">
+                        <td><div class="user-tbl-avatar">U</div></td>
+                        <td><strong>user1</strong></td>
+                        <td>user1@reportit.ph</td>
+                        <td><span class="role-badge role-user">User</span></td>
+                        <td><span class="user-status active">● Active</span></td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewUser(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditUser(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteUser(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-name="juan" data-email="juan@reportit.ph" data-role="user" data-status="active">
+                        <td><div class="user-tbl-avatar">J</div></td>
+                        <td><strong>juan</strong></td>
+                        <td>juan@reportit.ph</td>
+                        <td><span class="role-badge role-user">User</span></td>
+                        <td><span class="user-status active">● Active</span></td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewUser(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditUser(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteUser(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="manageUsersNoResult" class="admin-no-result" style="display:none;">No users match your search.</div>
+        </div>
+    </section>
+
+    <!-- ===== MANAGE NEWS SECTION ===== -->
+    <section class="admin-panel main-content-wrapper" id="manageNewsSection" style="display:none;">
+        <div class="admin-hero">
+            <div class="admin-hero-text">
+                <h1><i class="bi bi-file-earmark-text"></i> Manage News</h1>
+                <p>Add, edit, and remove local news articles and announcements</p>
+            </div>
+            <div class="admin-hero-actions">
+                <input type="text" id="manageNewsSearch" class="admin-search" placeholder="Search articles..." />
+                <button class="admin-add-btn" id="openAddNewsBtn">＋ Add Article</button>
+            </div>
+        </div>
+
+        <div class="admin-table-wrapper">
+            <table class="admin-table" id="manageNewsTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Badge</th>
+                        <th>Likes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="manageNewsTbody">
+                    <tr data-title="Sta. Rosa Avenue Road Repair — Schedule Update" data-category="Road Update" data-author="LGU Pasig City" data-badge="Announcement" data-content="The road repair along Sta. Rosa Avenue will commence on Monday, April 28. Expect lane closures from 8AM–5PM. Motorists are advised to take alternate routes via JP Rizal Street." data-likes="24">
+                        <td><strong>Sta. Rosa Avenue Road Repair — Schedule Update</strong></td>
+                        <td>🛣️ Road Update</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill announcement">Announcement</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 24</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Street Light Replacement Program — Phase 2" data-category="Street Lights" data-author="LGU Pasig City" data-badge="Update" data-content="Phase 2 of the LED street light replacement program will cover Makati Avenue and surrounding streets. Installation is expected to be completed within 2 weeks." data-likes="18">
+                        <td><strong>Street Light Replacement Program — Phase 2</strong></td>
+                        <td><i class="bi bi-lightbulb"></i> Street Lights</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill update">Update</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 18</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Drainage Blockage at Kapitolyo — Now Cleared" data-category="Drainage" data-author="LGU Pasig City" data-badge="Resolved" data-content="The drainage blockage reported along Kapitolyo has been successfully cleared by the city engineering team. Regular maintenance has been scheduled every quarter to prevent recurrence." data-likes="47">
+                        <td><strong>Drainage Blockage at Kapitolyo — Now Cleared</strong></td>
+                        <td>💧 Drainage</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill resolved-badge">Resolved</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 47</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Revised Garbage Collection Schedule — April 2026" data-category="Waste Collection" data-author="LGU Pasig City" data-badge="Advisory" data-content="Due to the upcoming holidays, garbage collection schedules have been adjusted. Please check the revised schedule posted at your barangay hall or visit the official city website for details per zone." data-likes="35">
+                        <td><strong>Revised Garbage Collection Schedule — April 2026</strong></td>
+                        <td><i class="bi bi-trash"></i> Waste Collection</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill advisory">Advisory</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 35</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="New Multi-Purpose Covered Court Opens in Brgy. Pinagbuhatan" data-category="Infrastructure" data-author="LGU Pasig City" data-badge="New Facility" data-content="The newly constructed multi-purpose covered court in Barangay Pinagbuhatan is now open to the public. The facility can accommodate basketball games, community events, and relief operations. It is equipped with flood-resilient flooring and solar-powered lighting." data-likes="89">
+                        <td><strong>New Multi-Purpose Covered Court Opens in Brgy. Pinagbuhatan</strong></td>
+                        <td>🏗️ Infrastructure</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#ccfbf1;color:#0d6659;">New Facility</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 89</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Upgraded Barangay Health Center Now Operational — Brgy. Kapitolyo" data-category="Health Services" data-author="LGU Pasig City" data-badge="Health" data-content="The Barangay Kapitolyo Health Center has completed its renovation and is now fully operational. The upgraded facility features a new consultation room, medicine stockroom, and birthing clinic. Free medical consultations are available every Monday to Friday, 8AM–5PM." data-likes="112">
+                        <td><strong>Upgraded Barangay Health Center Now Operational — Brgy. Kapitolyo</strong></td>
+                        <td>🏥 Health Services</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#fee2e2;color:#991b1b;">Health</span></td>
+                        <td><i class="bi bi-heart-fill"></i> 112</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Pasig City Financial Assistance Program — May 2026 Application Now Open" data-category="Financial Aid" data-author="LGU Pasig City" data-badge="Aid Program" data-content="The Pasig City CSWDO is now accepting applications for the May 2026 Financial Assistance Program. Eligible residents include solo parents, senior citizens, PWDs, and indigent families. Assistance of up to ₱3,000 per qualified household. Requirements: valid ID, barangay certificate of indigency, and proof of residency." data-likes="204">
+                        <td><strong>Pasig City Financial Assistance Program — May 2026 Application Now Open</strong></td>
+                        <td>💰 Financial Aid</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#ede9fe;color:#5b21b6;">Aid Program</span></td>
+                        <td>❤️ 204</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Pasig City Scholarship Program — SY 2026–2027 Applications Now Accepting" data-category="Education" data-author="LGU Pasig City" data-badge="Scholarship" data-content="The Pasig City Scholarship Program (PCSP) is now open for SY 2026–2027. Eligible applicants must be Pasig residents with a general average of 85% or higher, enrolled or planning to enroll in any SUC. Monthly stipends, tuition assistance, and school supply allowances included. Deadline: May 31, 2026." data-likes="176">
+                        <td><strong>Pasig City Scholarship Program — SY 2026–2027 Applications Now Accepting</strong></td>
+                        <td>🎓 Education</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#dbeafe;color:#1e40af;">Scholarship</span></td>
+                        <td>❤️ 176</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Free Livelihood Training & Seed Capital Grants — Register Now" data-category="Livelihood" data-author="LGU Pasig City" data-badge="Livelihood" data-content="The Pasig City CLDO is offering free skills training programs including Bread & Pastry Production, SMAW, and Beauty Care NC II this May 2026. Qualified graduates may apply for seed capital grants of up to ₱5,000. Open to all Pasig residents aged 18–60. Register at your barangay hall or the CLDO office." data-likes="158">
+                        <td><strong>Free Livelihood Training & Seed Capital Grants — Register Now</strong></td>
+                        <td>🛠️ Livelihood</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#d1fae5;color:#065f46;">Livelihood</span></td>
+                        <td>❤️ 158</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-title="Linear Park Along Pasig River Expansion — Phase 3 Groundbreaking" data-category="Environment" data-author="LGU Pasig City" data-badge="New Facility" data-content="The Pasig City government broke ground for Phase 3 of the Pasig River Linear Park expansion on April 18. The project will add 1.2 km of pedestrian walkways, jogging paths, native tree planting areas, and children's play zones from Brgy. Rosario to Brgy. Ugong. Expected completion: December 2026." data-likes="143">
+                        <td><strong>Linear Park Along Pasig River Expansion — Phase 3 Groundbreaking</strong></td>
+                        <td>🌳 Environment</td>
+                        <td>LGU Pasig City</td>
+                        <td><span class="news-badge-pill" style="background:#d1fae5;color:#065f46;">New Facility</span></td>
+                        <td>❤️ 143</td>
+                        <td class="tbl-actions">
+                            <button class="tbl-btn view-btn" onclick="adminViewNews(this)"><i class="bi bi-eye"></i> View</button>
+                            <button class="tbl-btn edit-btn" onclick="adminEditNews(this)"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="tbl-btn delete-btn" onclick="adminDeleteNews(this)"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="manageNewsNoResult" class="admin-no-result" style="display:none;">No articles match your search.</div>
+        </div>
+    </section>
+
+    <!-- ===== ADMIN MODALS ===== -->
+
+    <!-- View Report Modal -->
+    <div class="login-modal" id="adminViewReportModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminViewReportClose">&times;</span>
+            <h2>📋 Report Details</h2>
+            <div class="admin-view-grid">
+                <div class="admin-view-item"><label>Report ID</label><p id="av-id"></p></div>
+                <div class="admin-view-item"><label>Status</label><div id="av-status"></div></div>
+                <div class="admin-view-item"><label>Category</label><p id="av-category"></p></div>
+                <div class="admin-view-item"><label>Date</label><p id="av-date"></p></div>
+                <div class="admin-view-item full-span"><label>Location</label><p id="av-location"></p></div>
+                <div class="admin-view-item full-span"><label>Description</label><p id="av-description"></p></div>
+            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" id="adminViewReportClose2">Close</button></div>
+        </div>
+    </div>
+
+    <!-- Edit Report Modal -->
+    <div class="login-modal" id="adminEditReportModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminEditReportClose">&times;</span>
+            <h2>✏️ Edit Report</h2>
+            <input type="hidden" id="er-row-ref" />
+            <div class="report-form-group">
+                <label>Report ID</label>
+                <input type="text" id="er-id" disabled class="admin-input disabled-input"/>
+            </div>
+            <div class="report-form-group">
+                <label>Title</label>
+                <input type="text" id="er-title" class="admin-input" />
+            </div>
+            <div class="report-form-group">
+                <label>Category</label>
+                <input type="text" id="er-category" class="admin-input" />
+            </div>
+            <div class="report-form-group">
+                <label>Location</label>
+                <input type="text" id="er-location" class="admin-input" />
+            </div>
+            <div class="report-form-group">
+                <label>Status</label>
+                <select id="er-status" class="admin-input">
+                    <option value="pending">Pending</option>
+                    <option value="progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+            <div class="report-form-group">
+                <label>Description</label>
+                <textarea id="er-description" rows="3" class="admin-input"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="adminSaveReportBtn">💾 Save Changes</button>
+                <button class="btn btn-secondary" id="adminEditReportClose2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View User Modal -->
+    <div class="login-modal" id="adminViewUserModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminViewUserClose">&times;</span>
+            <h2>👤 User Details</h2>
+            <div class="admin-user-profile">
+                <div class="admin-user-avatar-lg" id="av-user-avatar">A</div>
+                <div class="admin-user-info-lg">
+                    <h3 id="av-user-name"></h3>
+                    <p id="av-user-email"></p>
+                    <span id="av-user-role-badge"></span>
+                </div>
+            </div>
+            <div class="admin-view-grid" style="margin-top:20px;">
+                <div class="admin-view-item"><label>Username</label><p id="av-user-name2"></p></div>
+                <div class="admin-view-item"><label>Role</label><p id="av-user-role2"></p></div>
+                <div class="admin-view-item"><label>Email</label><p id="av-user-email2"></p></div>
+                <div class="admin-view-item"><label>Status</label><p id="av-user-status2"></p></div>
+            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" id="adminViewUserClose2">Close</button></div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="login-modal" id="adminEditUserModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminEditUserClose">&times;</span>
+            <h2>✏️ Edit User</h2>
+            <div class="report-form-group">
+                <label>Username</label>
+                <input type="text" id="eu-name" disabled class="admin-input disabled-input"/>
+            </div>
+            <div class="report-form-group">
+                <label>Email</label>
+                <input type="email" id="eu-email" class="admin-input" />
+            </div>
+            <div class="report-form-group">
+                <label>Role</label>
+                <select id="eu-role" class="admin-input">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="report-form-group">
+                <label>Status</label>
+                <select id="eu-status" class="admin-input">
+                    <option value="active">Active</option>
+                    <option value="suspended">Suspended</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="adminSaveUserBtn">💾 Save Changes</button>
+                <button class="btn btn-secondary" id="adminEditUserClose2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View News Modal -->
+    <div class="login-modal" id="adminViewNewsModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminViewNewsClose">&times;</span>
+            <h2>📰 Article Details</h2>
+            <div class="admin-view-grid">
+                <div class="admin-view-item full-span"><label>Title</label><p id="an-title"></p></div>
+                <div class="admin-view-item"><label>Category</label><p id="an-category"></p></div>
+                <div class="admin-view-item"><label>Author</label><p id="an-author"></p></div>
+                <div class="admin-view-item"><label>Badge</label><div id="an-badge"></div></div>
+                <div class="admin-view-item"><label>Likes</label><p id="an-likes"></p></div>
+                <div class="admin-view-item full-span"><label>Content</label><p id="an-content"></p></div>
+            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" id="adminViewNewsClose2">Close</button></div>
+        </div>
+    </div>
+
+    <!-- Edit/Add News Modal -->
+    <div class="login-modal" id="adminEditNewsModal">
+        <div class="login-box admin-modal-box">
+            <span class="close-btn" id="adminEditNewsClose">&times;</span>
+            <h2 id="adminNewsModalTitle">✏️ Edit Article</h2>
+            <div class="report-form-group">
+                <label>Title</label>
+                <input type="text" id="en-title" class="admin-input" placeholder="Article title..." />
+            </div>
+            <div class="report-form-group">
+                <label>Category</label>
+                <input type="text" id="en-category" class="admin-input" placeholder="e.g. Road Update, Drainage..." />
+            </div>
+            <div class="report-form-group">
+                <label>Author</label>
+                <input type="text" id="en-author" class="admin-input" placeholder="e.g. LGU Pasig City" />
+            </div>
+            <div class="report-form-group">
+                <label>Badge Type</label>
+                <select id="en-badge" class="admin-input">
+                    <option value="Announcement">Announcement</option>
+                    <option value="Update">Update</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Advisory">Advisory</option>
+                </select>
+            </div>
+            <div class="report-form-group">
+                <label>Content</label>
+                <textarea id="en-content" rows="4" class="admin-input" placeholder="Article content..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="adminSaveNewsBtn">💾 Save Article</button>
+                <button class="btn btn-secondary" id="adminEditNewsClose2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANALYTICS SECTION -->
+    <section class="analytics main-content-wrapper" id="analyticsSection" style="display:none;">
+        <div class="analytics-hero">
+            <h1>📊 Analytics</h1>
+            <p>Overview of platform activity and admin tools</p>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="analytics-stats">
+            <div class="analytics-stat-card ac-blue">
+                <span class="ac-icon"><i class="bi bi-clipboard"></i></span>
+                <div class="ac-info">
+                    <p class="ac-value">156</p>
+                    <p class="ac-label">Total Reports</p>
+                </div>
+            </div>
+            <div class="analytics-stat-card ac-yellow">
+                <span class="ac-icon"><i class="bi bi-hourglass-split"></i></span>
+                <div class="ac-info">
+                    <p class="ac-value">23</p>
+                    <p class="ac-label">Pending</p>
+                </div>
+            </div>
+            <div class="analytics-stat-card ac-orange">
+                <span class="ac-icon"><i class="bi bi-gear"></i></span>
+                <div class="ac-info">
+                    <p class="ac-value">45</p>
+                    <p class="ac-label">In Progress</p>
+                </div>
+            </div>
+            <div class="analytics-stat-card ac-green">
+                <span class="ac-icon"><i class="bi bi-check-circle-fill"></i></span>
+                <div class="ac-info">
+                    <p class="ac-value">88</p>
+                    <p class="ac-label">Resolved</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN ACTION CARDS -->
+        <h3 class="analytics-section-title">Admin Tools</h3>
+        <div class="analytics-tools-grid">
+            <div class="analytics-tool-card">
+                <div class="atc-icon-wrap atc-blue"><i class="bi bi-folder2-open"></i></div>
+                <div class="atc-body">
+                    <h4>Manage Reports</h4>
+                    <p>Review, update, and resolve community-submitted reports</p>
+                </div>
+                <button class="atc-btn atc-btn-blue">Open</button>
+            </div>
+            <div class="analytics-tool-card">
+                <div class="atc-icon-wrap atc-purple"><i class="bi bi-people"></i></div>
+                <div class="atc-body">
+                    <h4>Manage Users</h4>
+                    <p>View registered users, manage roles and permissions</p>
+                </div>
+                <button class="atc-btn atc-btn-purple">Open</button>
+            </div>
+            <div class="analytics-tool-card">
+                <div class="atc-icon-wrap atc-teal"><i class="bi bi-pencil-square"></i></div>
+                <div class="atc-body">
+                    <h4>Manage News</h4>
+                    <p>Add, edit, and remove local news articles</p>
+                </div>
+                <button class="atc-btn atc-btn-teal">Open</button>
+            </div>
+            <div class="analytics-tool-card">
+                <div class="atc-icon-wrap atc-green"><i class="bi bi-graph-up"></i></div>
+                <div class="atc-body">
+                    <h4>Analytics</h4>
+                    <p>Track platform usage, report trends, and user activity</p>
+                </div>
+                <button class="atc-btn atc-btn-green">Open</button>
+            </div>
+        </div>
+
+        <!-- RECENT ACTIVITY -->
+        <h3 class="analytics-section-title">Recent Activity</h3>
+        <div class="analytics-activity">
+            <div class="aa-item">
+                <span class="aa-dot dot-blue"></span>
+                <div class="aa-content">
+                    <p><strong>REP-0350</strong> — Status changed to In Progress</p>
+                    <small>3 hours ago</small>
+                </div>
+            </div>
+            <div class="aa-item">
+                <span class="aa-dot dot-green"></span>
+                <div class="aa-content">
+                    <p><strong>REP-0351</strong> — Resolved</p>
+                    <small>1 day ago</small>
+                </div>
+            </div>
+            <div class="aa-item">
+                <span class="aa-dot dot-yellow"></span>
+                <div class="aa-content">
+                    <p><strong>REP-0352</strong> — New report submitted</p>
+                    <small>2 days ago</small>
+                </div>
+            </div>
+            <div class="aa-item">
+                <span class="aa-dot dot-purple"></span>
+                <div class="aa-content">
+                    <p><strong>User:</strong> juan registered a new account</p>
+                    <small>3 days ago</small>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal" id="loginModal">
+    <div class="login-box">
+        <span class="close-btn" id="loginClose">&times;</span>
+        <h2>Login</h2>
+        <div class="input-group">
+            <input type="text" id="loginName" placeholder="Name" />
+            <span class="icon"><i class="bi bi-person"></i></span>
+        </div>
+        <div class="input-group">
+            <input type="password" id="loginPassword" placeholder="Password" />
+            <span class="icon"><i class="bi bi-lock"></i></span>
+        </div>
+        <div class="forgot">
+            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+        </div>
+        <button class="login-btn-main" id="loginBtn">Login</button>
+        <div class="register">
+            Don't have an account? <a href="#" id="openRegisterLink">Register</a>
+        </div>
+    </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div class="login-modal" id="registerModal">
+    <div class="login-box">
+        <span class="close-btn" id="registerClose">&times;</span>
+        <h2>Create Account</h2>
+        <div class="input-group">
+            <input type="text" id="registerName" placeholder="Full Name" />
+            <span class="icon"><i class="bi bi-person"></i></span>
+        </div>
+        <div class="input-group">
+            <input type="email" id="registerEmail" placeholder="Email Address" />
+            <span class="icon"><i class="bi bi-envelope"></i></span>
+        </div>
+        <div class="input-group">
+            <input type="password" id="registerPassword" placeholder="Password" />
+            <span class="icon"><i class="bi bi-lock"></i></span>
+        </div>
+        <div class="input-group">
+            <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" />
+            <span class="icon"><i class="bi bi-lock"></i></span>
+        </div>
+        <button class="login-btn-main" id="registerBtn">Register</button>
+        <div class="register">
+            Already have an account? <a href="#" id="openLoginFromRegister">Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="login-modal" id="forgotModal">
+    <div class="login-box">
+        <span class="close-btn" id="forgotClose">&times;</span>
+        <h2>Forgot Password</h2>
+        <p class="modal-subtitle">Enter your username to reset your password.</p>
+        <div id="forgotStep1">
+            <div class="input-group">
+                <input type="text" id="forgotName" placeholder="Enter your Name" />
+                <span class="icon"><i class="bi bi-person"></i></span>
+            </div>
+            <button class="login-btn-main" id="forgotNextBtn">Next</button>
+        </div>
+        <div id="forgotStep2" style="display:none;">
+            <div class="input-group">
+                <input type="password" id="newPassword" placeholder="New Password" />
+                <span class="icon"><i class="bi bi-lock"></i></span>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" />
+                <span class="icon"><i class="bi bi-lock"></i></span>
+            </div>
+            <button class="login-btn-main" id="resetPasswordBtn">Reset Password</button>
+        </div>
+        <div class="register" style="margin-top: 20px;">
+            Remembered it? <a href="#" id="backToLoginFromForgot">Back to Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- CREATE THREAD MODAL -->
+<div class="login-modal" id="createThreadModal">
+    <div class="login-box report-box">
+        <span class="close-btn" id="createThreadClose">&times;</span>
+        <h2>Create New Thread</h2>
+        <div class="report-form-group">
+            <label>Category</label>
+            <select id="threadCategory">
+                <option value="">-- Select Category --</option>
+                <option value="Road Damage">Road Damage</option>
+                <option value="Street Light">Street Light</option>
+                <option value="Drainage">Drainage / Flooding</option>
+                <option value="Garbage">Garbage / Waste</option>
+                <option value="Sidewalk">Sidewalk / Walkway</option>
+                <option value="General">General Discussion</option>
+            </select>
+        </div>
+        <div class="report-form-group">
+            <label>Thread Title</label>
+            <input type="text" id="threadTitle" placeholder="What's your thread about?" />
+        </div>
+        <div class="report-form-group">
+            <label>Description</label>
+            <textarea id="threadDescription" rows="4" placeholder="Share your thoughts and discussion..."></textarea>
+        </div>
+        <button class="login-btn-main" id="createThreadBtn2">Create Thread</button>
+    </div>
+</div>
+
+<!-- REPORT DETAILS MODAL -->
+<div class="login-modal" id="reportDetailsModal">
+    <div class="login-box report-details-box">
+        <span class="close-btn" id="reportDetailsClose">&times;</span>
+        <h2 id="modalReportId">REP-0000</h2>
+        
+        <div class="report-modal-content">
+            <!-- REPORT IMAGE -->
+            <div class="report-modal-image">
+                <img id="modalReportImage" src="road.png" alt="Report Image" />
+            </div>
+
+            <!-- REPORT DETAILS -->
+            <div class="report-modal-details">
+                <div class="detail-group">
+                    <label>Title</label>
+                    <p id="modalReportTitle">Loading...</p>
+                </div>
+
+                <div class="detail-group">
+                    <label>Category</label>
+                    <p id="modalReportCategory">Loading...</p>
+                </div>
+
+                <div class="detail-group">
+                    <label>Location</label>
+                    <p id="modalReportLocation">Loading...</p>
+                </div>
+
+                <div class="detail-group">
+                    <label>Status</label>
+                    <div id="modalReportStatus" class="status">Loading...</div>
+                </div>
+
+                <div class="detail-group">
+                    <label>Description</label>
+                    <p id="modalReportDescription">Loading...</p>
+                </div>
+
+                <div class="detail-group">
+                    <label>Submitted Date</label>
+                    <p id="modalReportDate">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="reportDetailsClose2">Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
